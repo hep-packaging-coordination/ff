@@ -410,7 +410,7 @@
 		    xmax = max(xmax,absc(piDpj(j,i)))
     1		continue
 		if ( xloss*absc(cnul) .gt. precx*xmax ) print *,
-     +			'ffcl4r: error: \sum p',i,'.p6-10 do not add ',
+     +			'ffcl4r: error: sum p',i,'.p6-10 do not add ',
      +			'up to 0: ',cnul,xmax
 		cnul = 0
 		xmax = 0
@@ -419,7 +419,7 @@
 		    xmax = max(xmax,absc(piDpj(j,i)))
     2		continue
 		if ( xloss*absc(cnul) .gt. precx*xmax ) print *,
-     +			'ffcl4r: error: \sum p',i,'.p11-15 do not add ',
+     +			'ffcl4r: error: sum p',i,'.p11-15 do not add ',
      +			'up to 0: ',cnul,xmax
 		do 3 j=6,10
 		    k = j+1
@@ -427,7 +427,7 @@
 		    cnul = piDpj(i,j) + piDpj(i,k) - piDpj(i,j+5)
 		    xmax = max(abs(piDpj(i,j)),abs(piDpj(i,k)))
 		    if ( xloss*absc(cnul) .gt. precx*xmax ) print *,
-     +			'ffcl4r: error: \sum p',i,'.p',j,k,j+5,' do ',
+     +			'ffcl4r: error: sum p',i,'.p',j,k,j+5,' do ',
      +			'not add up to 0: ',cnul,xmax
     3		continue
     4	    continue
