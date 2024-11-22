@@ -729,9 +729,9 @@ c
 	    print *,'cd0  :',cs*cfac
  1012	    format(g12.6,1x,g12.6,i4,2x,g12.6,1x,g12.6,i4)
  1013	    format(g12.6,1x,g12.6,i4,2x,g12.6,1x,g12.6,i4,2x,g12.6,1x,
-     +		g12.6,i4)
+     +        g12.6,i4)
  1004	    format(g12.6,1x,g12.6,2x,g12.6,1x,g12.6,2x,g12.6,1x,g12.6,
-     +		2x,g12.6,1x,g12.6)
+     +        2x,g12.6,1x,g12.6)
 	endif
 *  #] debug:
 *###] ffxd0e:
