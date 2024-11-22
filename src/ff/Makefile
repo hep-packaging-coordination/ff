@@ -3,7 +3,7 @@ FFLAGS        = -std=legacy
 
 LFLAGS	      = $(FFLAGS)
 
-DEST	      = /usr/local/lib
+DEST	      ?= /usr/local/lib
 
 HDRS	      = aa.h \
 		ff.h
