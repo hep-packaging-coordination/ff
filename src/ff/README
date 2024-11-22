@@ -1,3 +1,5 @@
+8-sep-2003.  A special case in C11 was found to be wrongly coded (thanks Andre van Hameren).  In rare circumstances thtis would give the wrong value for C11.  New ffxc1.f
+
 1-sept-1996.  In spite of my new job at the KNMI, I still fully support 
 the FF library.
 

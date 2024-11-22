@@ -321,7 +321,7 @@
 *	the debugging flags.
 *
 	lwrite = .FALSE.
-	ltest = .TRUE.
+	ltest = .FALSE.
 	lwarn = .TRUE.
 	ldc3c4 = .FALSE.
 	l4also = .FALSE.
