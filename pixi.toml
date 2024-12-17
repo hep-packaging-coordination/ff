@@ -10,17 +10,20 @@ version = "0.1.0"
 
 build = """
 git checkout -- src/ff/ffinit.f && \
-git checkout -- src/ff/Makefile && \
+sed -i "s|/user/gj/lib/|$CONDA_PREFIX/share/ff/|g" src/ff/ffinit.f && \
 sed -i "s|/usr/local/ff/|$CONDA_PREFIX/share/ff/|g" src/ff/ffinit.f && \
-sed -i 's/-std=legacy/-std=legacy -ffixed-line-length-132/g' src/ff/Makefile && \
 cd src/ff && \
 make clean && \
-make DEST=$CONDA_PREFIX/lib
+export CPU_COUNT=10 && \
+make --jobs=$CPU_COUNT FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=$CONDA_PREFIX/lib
 """
 
 install = { cmd = """
 cd src/ff && \
-make DEST=$CONDA_PREFIX/lib install && \
+make clean && \
+export CPU_COUNT=10 && \
+make FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=$CONDA_PREFIX/lib install && \
+echo $? && \
 mkdir -p $CONDA_PREFIX/share/ff/ && \
 cp fferr.dat $CONDA_PREFIX/share/ff/ && \
 cp ffwarn.dat $CONDA_PREFIX/share/ff/ && \
@@ -30,7 +33,7 @@ make clean
 test = """
 cd src/ff && \
 make clean && \
-make npointes && \
+make npointes FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=$CONDA_PREFIX/lib && \
 ./npointes
 """
 
