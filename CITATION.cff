@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "Please cite the following works when using this software."
+type: software
+authors:
+- family-names: "van Oldenborgh"
+  given-names: "Geert Jan"
+  affiliation: "NIKHEF"
+title: "ff: v2.0.0"
+version: 2.0.0
+repository-code: "https://github.com/hep-packaging-coordination/ff/releases/tag/v2.0.0"
+license: "MIT"
+references:
+  - type: article
+    authors:
+    - family-names: "van Oldenborgh"
+      given-names: "Geert Jan"
+      affiliation: "NIKHEF"
+    - family-names: "Vermaseren"
+      given-names: "Jozef"
+      affiliation: "NIKHEF"
+    title: "New Algorithms for One Loop Integrals"
+    doi: 10.1007/BF01621031
+    url: "https://doi.org/10.1007/BF01621031"
+    year: 1990
+    volume: 46
+    pages: 425
+    journal: "Zeitschrift für Physik C - Particles and Fields"
