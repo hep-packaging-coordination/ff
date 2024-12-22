@@ -1,6 +1,6 @@
-# ff
+# The FF library written by Geert Jan van Oldenborgh
 
-Mirror of the FF library written by Geert Jan van Oldenborgh
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14542887.svg)](https://doi.org/10.5281/zenodo.14542887)
 
 ## Installing
 
