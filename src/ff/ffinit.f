@@ -776,13 +776,13 @@
 *
 *	first try - my home directory
 	path = '/user/gj/lib/'
-	fullname = path(1:index(path,' ')-1)//name
+	fullname = path(1:len_trim(path)) // name
 	open(ifile,file=fullname,status='OLD',err=30)
 	return
    30	continue
 *	second try - the system directory
 	path = '/usr/local/ff/'
-	fullname = path(1:index(path,' ')-1)//name
+	fullname = path(1:len_trim(path)) // name
 	open(ifile,file=fullname,status='OLD',err=40)
 	return
 *	file could not be found
