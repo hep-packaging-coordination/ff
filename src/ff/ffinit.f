@@ -756,7 +756,7 @@
 	character*(*) name
 *
 	logical lopen
-	character*128 path,fullname
+	character*512 path,fullname
 *
 	include 'ff.h'
 *
