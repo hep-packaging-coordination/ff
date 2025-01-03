@@ -4,7 +4,34 @@
 
 ## Installing
 
-The 1998 source code is known to no longer build and is being distributed for historical reasons.
+### From source
+
+Building from source requires `make` and a Fortran compiler (assumed to be set in your environment to `FC`).
+To build from source and install the library under `<install target path>` run
+
+```
+cd src/ff
+make install FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=<install target path>/lib --jobs
+```
+
+### From conda-forge
+
+FF is packaged and distributed on [conda-forge](https://github.com/conda-forge/ff-feedstock/) for the following platforms:
+
+[![Conda Version](https://img.shields.io/conda/vn/conda-forge/ff-static.svg)](https://anaconda.org/conda-forge/ff-static)
+[![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/ff-static.svg)](https://anaconda.org/conda-forge/ff-static)
+
+To install and add `ff-static` to a project with [`pixi`](https://pixi.sh/), from the project directory run
+
+```
+pixi add ff-static
+```
+
+and to install into a particular conda environment with [`conda`](https://docs.conda.io/projects/conda/), in the activated environment run
+
+```
+conda install --channel conda-forge ff-static
+```
 
 ## Citation
 
