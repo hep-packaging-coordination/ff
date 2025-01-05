@@ -774,19 +774,16 @@
 *	fullname = 'USR$LOCAL[GEERT]'//name
 *	open(ifile,file=fullname,status='OLD',READONLY,err=100)
 *
-*	first try - my home directory
-	path = '/user/gj/lib/'
-	fullname = path(1:index(path,' ')-1)//name
+*	default to the system directory
+	path = '/usr/local/share/ff/'
+
+	path = trim(path)
+	fullname = trim(adjustl(trim(path))) // trim(adjustl(trim(name)))
+
 	open(ifile,file=fullname,status='OLD',err=30)
 	return
-   30	continue
-*	second try - the system directory
-	path = '/usr/local/ff/'
-	fullname = path(1:index(path,' ')-1)//name
-	open(ifile,file=fullname,status='OLD',err=40)
-	return
 *	file could not be found
-   40	continue
+   30	continue
 	print *,'ffopen: error: could not open ',fullname
 	print *,'        adjust path in ffopen (ffinit.f)'
 	ier = -1
