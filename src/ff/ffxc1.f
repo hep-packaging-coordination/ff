@@ -182,7 +182,7 @@
 	ms(4) = 2*mc0*abs(piDpj(1,5)*piDpj(4,5))
 	ms(5) = 2*mc0*abs(piDpj(1,4)*piDpj(5,5))
 *	exceptions
-	if ( xpi(1).eq.xpi(3) .and. xpi(5).eq.xpi(6) ) then
+	if ( xpi(2).eq.xpi(3) .and. xpi(4).eq.xpi(6) ) then
 	    if ( lwrite ) print *,'special case m1=m3,p5=p6'
 	    cs(2) = + cb0i(2)*DBLE(xpi(5))
 	    cs(3) = 0

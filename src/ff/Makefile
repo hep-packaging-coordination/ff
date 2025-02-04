@@ -1,4 +1,5 @@
-FFLAGS        = 
+FC            = gfortran
+FFLAGS        = -std=legacy
 
 LFLAGS	      = $(FFLAGS)
 
@@ -7,7 +8,7 @@ DEST	      = /usr/local/lib
 HDRS	      = aa.h \
 		ff.h
 
-LIBRARY	      = ff.a
+LIBRARY	      = libff.a
 
 MAKEFILE      = Makefile
 
@@ -162,7 +163,7 @@ test:		npointes
 		diff -w npointes.out npointes.sun
 
 npointes:	npointes.o $(LIBRARY)
-		f77 $(LFLAGS) -o npointes npointes.o $(LIBRARY)
+		$(FC) $(LFLAGS) -o npointes npointes.o $(LIBRARY)
 
 $(LIBRARY):	$(OBJS) $(AAOBJS)
 		ar cru $(LIBRARY) $(OBJS) $(AAOBJS)

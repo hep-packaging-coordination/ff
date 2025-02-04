@@ -215,7 +215,7 @@
 *
 *	convert ??xj to ??xi
 *
-	call ffeji(cdxi,mcxi,ccxi,mcxi,cbxi,mbxi,caxi,maxi,
+	call ffeji(cdxi,mdxi,ccxi,mcxi,cbxi,mbxi,caxi,maxi,
      +		cdxj,mdxj,ccxj,mcxj,cbxj,mbxj,caxj,maxj,level)
 *
 *	and call the real routine for the rest
@@ -460,8 +460,8 @@
 *
 *	copy FF structs to AA
 *
-	do i=16,35
-	    cexi(i) = ce3ijk(m2ijk(1,i),m2ijk(2,i),m2ijk(3,i))
+	do i=1,20
+	    cexi(i+15) = ce3ijk(m2ijk(1,i),m2ijk(2,i),m2ijk(3,i))
 	enddo
 	if ( atest ) then
 *
