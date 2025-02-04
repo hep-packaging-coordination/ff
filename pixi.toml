@@ -1,0 +1,60 @@
+[project]
+authors = ["Matthew Feickert <matthew.feickert@cern.ch>"]
+channels = ["conda-forge"]
+description = "Build instructions for FF"
+name = "ff"
+platforms = ["linux-64", "osx-arm64"]
+version = "2.0.1"
+
+[tasks.build]
+description = "Build FF from source"
+cmd = """
+git checkout -- src/ff/ffinit.f && \
+sed -i "s|/user/gj/lib/|$CONDA_PREFIX/share/ff/|g" src/ff/ffinit.f && \
+sed -i "s|/usr/local/ff/|$CONDA_PREFIX/share/ff/|g" src/ff/ffinit.f && \
+cd src/ff && \
+make clean && \
+export CPU_COUNT=10 && \
+make --jobs=$CPU_COUNT FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=$CONDA_PREFIX/lib
+"""
+
+[tasks.install]
+description = "Install FF under $CONDA_PREFIX"
+cmd = """
+cd src/ff && \
+export CPU_COUNT=10 && \
+make FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=$CONDA_PREFIX/lib install && \
+mkdir -p $CONDA_PREFIX/include/ff && \
+cp *.h $CONDA_PREFIX/include/ff && \
+mkdir -p $CONDA_PREFIX/share/ff/ && \
+cp fferr.dat $CONDA_PREFIX/share/ff/ && \
+cp ffwarn.dat $CONDA_PREFIX/share/ff/ && \
+make clean
+"""
+depends-on = ["build"]
+
+[tasks.test]
+description = "Test installed FF with npointes program"
+cmd = """
+$FC ./src/ff/npointes.f -o npointes $FFLAGS -I$CONDA_PREFIX/include/ff $LDFLAGS -lff && \
+./npointes
+"""
+
+[tasks.clean]
+description = "Reset the repository files edited during build and clean"
+cmd =  """
+git checkout -- src/ff/ffinit.f && \
+git checkout -- src/ff/Makefile && \
+cd src/ff && \
+make clean
+"""
+
+[tasks.start]
+description = "Install and test FF"
+depends-on = ["install", "test", "clean"]
+
+[dependencies]
+cxx-compiler = ">=1.8.0,<2"
+fortran-compiler = ">=1.8.0,<2"
+make = ">=4.4.1,<5"
+sed = ">=4.8,<5"
