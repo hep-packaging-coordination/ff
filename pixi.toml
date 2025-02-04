@@ -22,10 +22,10 @@ make --jobs=$CPU_COUNT FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-no
 description = "Install FF under $CONDA_PREFIX"
 cmd = """
 cd src/ff && \
-make clean && \
 export CPU_COUNT=10 && \
 make FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=$CONDA_PREFIX/lib install && \
-echo $? && \
+mkdir -p $CONDA_PREFIX/include/ff && \
+cp *.h $CONDA_PREFIX/include/ff && \
 mkdir -p $CONDA_PREFIX/share/ff/ && \
 cp fferr.dat $CONDA_PREFIX/share/ff/ && \
 cp ffwarn.dat $CONDA_PREFIX/share/ff/ && \
@@ -36,9 +36,7 @@ depends-on = ["build"]
 [tasks.test]
 description = "Test installed FF with npointes program"
 cmd = """
-cd src/ff && \
-make clean && \
-make npointes FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=$CONDA_PREFIX/lib && \
+$FC ./src/ff/npointes.f -o npointes $FFLAGS -I$CONDA_PREFIX/include/ff $LDFLAGS -lff && \
 ./npointes
 """
 
