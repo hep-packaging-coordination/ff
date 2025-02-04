@@ -5,9 +5,9 @@ authors:
 - family-names: "van Oldenborgh"
   given-names: "Geert Jan"
   affiliation: "NIKHEF"
-title: "ff: v2.0.0"
-version: 2.0.0
-repository-code: "https://github.com/hep-packaging-coordination/ff/releases/tag/v2.0.0"
+title: "ff: v2.0.1"
+version: 2.0.1
+repository-code: "https://github.com/hep-packaging-coordination/ff/releases/tag/v2.0.1"
 license: "MIT"
 references:
   - type: article

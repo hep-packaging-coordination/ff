@@ -47,7 +47,7 @@
 	if ( init .ne. 0 ) return
 	init = 1
 	print *,'===================================================='
-	print *,'  FF 2.0, a package to evaluate one-loop integrals'
+	print *,'  FF 2.0.1, a package to evaluate one-loop integrals'
 	print *,'written by G. J. van Oldenborgh, NIKHEF-H, Amsterdam'
 	print *,'===================================================='
 	print *,'for the algorithms used see preprint NIKHEF-H 89/17,'
