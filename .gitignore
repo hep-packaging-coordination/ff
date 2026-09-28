@@ -34,3 +34,6 @@
 # pixi environments
 .pixi
 *.egg-info
+
+# out of tree build directory
+build/
