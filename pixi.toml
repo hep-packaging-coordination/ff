@@ -18,44 +18,38 @@ AR = "x86_64-conda-linux-gnu-ar"
 RANLIB = "x86_64-conda-linux-gnu-ranlib"
 
 [tasks.build]
-description = "Build FF from source"
+description = "Build FF from source out of tree under build/"
 cmd = """
-cd src/ff && \
-make clean && \
+mkdir -p build && \
+cd build && \
 export CPU_COUNT=10 && \
-make --jobs=$CPU_COUNT FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=$CONDA_PREFIX/lib
+make --jobs=$CPU_COUNT -f ../src/ff/Makefile VPATH=../src/ff FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none"
 """
 
 [tasks.install]
 description = "Install FF under $CONDA_PREFIX"
 cmd = """
-cd src/ff && \
-export CPU_COUNT=10 && \
-make FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=$CONDA_PREFIX/lib install && \
+cd build && \
+make -f ../src/ff/Makefile VPATH=../src/ff FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=$CONDA_PREFIX/lib install && \
 mkdir -p $CONDA_PREFIX/include/ff && \
-cp *.h $CONDA_PREFIX/include/ff && \
-mkdir -p $CONDA_PREFIX/share/ff/ && \
-cp fferr.dat $CONDA_PREFIX/share/ff/ && \
-cp ffwarn.dat $CONDA_PREFIX/share/ff/ && \
-make clean
+cp ../src/ff/*.h $CONDA_PREFIX/include/ff/ && \
+mkdir -p $CONDA_PREFIX/share/ff && \
+cp ../src/ff/*.dat $CONDA_PREFIX/share/ff/
 """
 depends-on = ["build"]
 
 [tasks.test]
 description = "Test installed FF with npointes program"
 cmd = """
-$FC ./src/ff/npointes.f -o npointes $FFLAGS -I$CONDA_PREFIX/include/ff $LDFLAGS -lff && \
+mkdir -p build && \
+cd build && \
+$FC ../src/ff/npointes.f -o npointes $FFLAGS -I$CONDA_PREFIX/include/ff $LDFLAGS -lff && \
 ./npointes
 """
 
 [tasks.clean]
-description = "Reset the repository files edited during build and clean"
-cmd =  """
-git checkout -- src/ff/ffinit.f && \
-git checkout -- src/ff/Makefile && \
-cd src/ff && \
-make clean
-"""
+description = "Remove the build directory"
+cmd = "rm -rf build"
 
 [tasks.start]
 description = "Install and test FF"
