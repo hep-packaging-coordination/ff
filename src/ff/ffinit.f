@@ -756,6 +756,7 @@
 	character*(*) name
 *
 	logical lopen
+	integer istat,ilen
 	character*512 path,fullname
 *
 	include 'ff.h'
@@ -774,6 +775,27 @@
 *	fullname = 'USR$LOCAL[GEERT]'//name
 *	open(ifile,file=fullname,status='OLD',READONLY,err=100)
 *
+*	Look up the data file directory at runtime from environment
+*	variables first, as paths compiled into the library are not
+*	relocatable.
+*	FF_DATA_DIR - directory containing the data files
+	call get_environment_variable('FF_DATA_DIR',path,length=ilen,
+     +	    status=istat)
+	if ( istat.eq.0 .and. ilen.gt.0 ) then
+	    fullname = trim(path)//'/'//name
+	    open(ifile,file=fullname,status='OLD',err=24)
+	    return
+	endif
+   24	continue
+*	CONDA_PREFIX - active conda environment
+	call get_environment_variable('CONDA_PREFIX',path,length=ilen,
+     +	    status=istat)
+	if ( istat.eq.0 .and. ilen.gt.0 ) then
+	    fullname = trim(path)//'/share/ff/'//name
+	    open(ifile,file=fullname,status='OLD',err=25)
+	    return
+	endif
+   25	continue
 *	first try - my home directory
 	path = '/user/gj/lib/'
 	fullname = path(1:index(path,' ')-1)//name
@@ -788,7 +810,8 @@
 *	file could not be found
    40	continue
 	print *,'ffopen: error: could not open ',fullname
-	print *,'        adjust path in ffopen (ffinit.f)'
+	print *,'        set FF_DATA_DIR to the directory containing ',
+     +	    name
 	ier = -1
 *###] ffopen:
 	end

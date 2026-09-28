@@ -1,17 +1,25 @@
-[project]
-authors = ["Matthew Feickert <matthew.feickert@cern.ch>"]
+[workspace]
 channels = ["conda-forge"]
 description = "Build instructions for FF"
 name = "ff"
 platforms = ["linux-64", "osx-arm64"]
 version = "2.0.1"
 
+# The minimally activated compilers do not set any environment variables
+[activation.env]
+FC = "gfortran"
+FFLAGS = "-O2 -fPIC"
+LDFLAGS = "-L$CONDA_PREFIX/lib -Wl,-rpath,$CONDA_PREFIX/lib"
+
+# Use the archiver from the compiler toolchain rather than requiring one on the system.
+# On macOS use the Xcode Command Line Tools archiver.
+[target.linux-64.activation.env]
+AR = "x86_64-conda-linux-gnu-ar"
+RANLIB = "x86_64-conda-linux-gnu-ranlib"
+
 [tasks.build]
 description = "Build FF from source"
 cmd = """
-git checkout -- src/ff/ffinit.f && \
-sed -i "s|/user/gj/lib/|$CONDA_PREFIX/share/ff/|g" src/ff/ffinit.f && \
-sed -i "s|/usr/local/ff/|$CONDA_PREFIX/share/ff/|g" src/ff/ffinit.f && \
 cd src/ff && \
 make clean && \
 export CPU_COUNT=10 && \
@@ -54,7 +62,6 @@ description = "Install and test FF"
 depends-on = ["install", "test", "clean"]
 
 [dependencies]
-cxx-compiler = ">=1.8.0,<2"
-fortran-compiler = ">=1.8.0,<2"
+cxx-compiler = ">=2.0.0,<3"
+fortran-compiler = ">=2.0.0,<3"
 make = ">=4.4.1,<5"
-sed = ">=4.8,<5"
