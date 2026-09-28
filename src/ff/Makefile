@@ -1,6 +1,10 @@
 FC            = gfortran
 FFLAGS        = -std=legacy
 
+AR           ?= ar
+
+RANLIB       ?= ranlib
+
 LFLAGS	      = $(FFLAGS)
 
 DEST	      = /usr/local/lib
@@ -166,21 +170,21 @@ npointes:	npointes.o $(LIBRARY)
 		$(FC) $(LFLAGS) -o npointes npointes.o $(LIBRARY)
 
 $(LIBRARY):	$(OBJS) $(AAOBJS)
-		ar cru $(LIBRARY) $(OBJS) $(AAOBJS)
-		ranlib $(LIBRARY)
+		$(AR) cru $(LIBRARY) $(OBJS) $(AAOBJS)
+		$(RANLIB) $(LIBRARY)
 
 clean:;		rm -f $(OBJS) $(AAOBJS) $(LIBRARY) npointes.o npointes
 
 depend:;	mkmf -f $(MAKEFILE) LIBRARY=$(LIBRARY) DEST=$(DEST)
 
-extract:;	ar xo $(DEST)/$(LIBRARY)
+extract:;	$(AR) xo $(DEST)/$(LIBRARY)
 		@rm -f __.SYMDEF
 
 index:;		ctags -wx $(HDRS) $(SRCS)
 
 install:	$(LIBRARY)
 		install $(LIBRARY) $(DEST)
-		ranlib $(DEST)/$(LIBRARY)
+		$(RANLIB) $(DEST)/$(LIBRARY)
 
 library:	$(LIBRARY)
 
@@ -189,7 +193,7 @@ print:;		$(PRINT) $(HDRS) $(SRCS)
 update:		$(DEST)/$(LIBRARY)
 
 $(DEST)/$(LIBRARY): $(SRCS) $(HDRS) $(EXTHDRS)
-		@-ar xo $(DEST)/$(LIBRARY)
+		@-$(AR) xo $(DEST)/$(LIBRARY)
 		@make -f $(MAKEFILE) DEST=$(DEST) install clean
 ###
 aaxbx.o: ff.h aa.h

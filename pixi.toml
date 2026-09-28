@@ -11,6 +11,12 @@ FC = "gfortran"
 FFLAGS = "-O2 -fPIC"
 LDFLAGS = "-L$CONDA_PREFIX/lib -Wl,-rpath,$CONDA_PREFIX/lib"
 
+# Use the archiver from the compiler toolchain rather than requiring one on the system.
+# On macOS use the Xcode Command Line Tools archiver.
+[target.linux-64.activation.env]
+AR = "x86_64-conda-linux-gnu-ar"
+RANLIB = "x86_64-conda-linux-gnu-ranlib"
+
 [tasks.build]
 description = "Build FF from source"
 cmd = """
