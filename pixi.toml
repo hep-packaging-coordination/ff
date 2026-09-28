@@ -9,9 +9,6 @@ version = "2.0.1"
 [tasks.build]
 description = "Build FF from source"
 cmd = """
-git checkout -- src/ff/ffinit.f && \
-sed -i "s|/user/gj/lib/|$CONDA_PREFIX/share/ff/|g" src/ff/ffinit.f && \
-sed -i "s|/usr/local/ff/|$CONDA_PREFIX/share/ff/|g" src/ff/ffinit.f && \
 cd src/ff && \
 make clean && \
 export CPU_COUNT=10 && \
@@ -57,4 +54,3 @@ depends-on = ["install", "test", "clean"]
 cxx-compiler = ">=1.8.0,<2"
 fortran-compiler = ">=1.8.0,<2"
 make = ">=4.4.1,<5"
-sed = ">=4.8,<5"

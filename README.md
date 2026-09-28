@@ -14,6 +14,20 @@ cd src/ff
 make install FC=$FC FFLAGS="$FFLAGS -std=legacy -ffixed-line-length-none" DEST=<install target path>/lib --jobs
 ```
 
+FF also reads the data files `fferr.dat`, `ffwarn.dat`, and `ffperm5.dat` from `src/ff/` at runtime.
+Copy them to a data directory, such as `<install target path>/share/ff/`, and point FF to it by setting the `FF_DATA_DIR` environment variable
+
+```
+export FF_DATA_DIR=<install target path>/share/ff
+```
+
+At runtime FF looks for the data files in the following locations, in order:
+
+1. `$FF_DATA_DIR/`
+2. `$CONDA_PREFIX/share/ff/`
+3. `/user/gj/lib/`
+4. `/usr/local/ff/`
+
 ### From conda-forge
 
 FF is packaged and distributed on [conda-forge](https://github.com/conda-forge/ff-feedstock/) for the following platforms:
